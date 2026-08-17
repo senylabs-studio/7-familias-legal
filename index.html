@@ -4,209 +4,445 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Política de privacidad — 7 Families</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&display=swap"
+  rel="stylesheet"
+/>
 <style>
   :root {
-    color-scheme: light dark;
-    --bg: #faf6ee;
-    --ink: #2a1e10;
-    --muted: #6b5c47;
-    --accent: #d3762b;
-    --card: #ffffff;
-    --border: #e8ddc9;
+    --marino: #0d4b6b;
+    --marino-a20: rgba(13, 75, 107, 0.2);
+    --marino-faint: rgba(13, 75, 107, 0.45);
+    --cielo-100: #e3f3fa;
+    --cielo-light: #7be3ff;
+    --cielo: #23b7f0;
+    --cielo-dark: #1596cc;
+    --coral: #ff5d73;
+    --coral-100: #ffe6ea;
+    --coral-700: #c93b50;
+    --meta-ink: #4a7f99;
+    --blanco: #ffffff;
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #1c1712;
-      --ink: #f3ead9;
-      --muted: #b9ab92;
-      --accent: #f0a15c;
-      --card: #262019;
-      --border: #3a3125;
-    }
+  * {
+    box-sizing: border-box;
   }
-  * { box-sizing: border-box; }
   body {
     margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    line-height: 1.6;
+    min-height: 100vh;
+    background: linear-gradient(180deg, var(--cielo-light) 0%, var(--cielo) 45%, var(--cielo-dark) 100%);
+    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--marino);
+  }
+  .hero {
+    padding: 28px 16px 96px;
+    text-align: center;
+  }
+  .wordmark {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    color: var(--blanco);
+    -webkit-text-stroke: 6px var(--marino);
+    paint-order: stroke fill;
+    letter-spacing: 0.01em;
+    margin: 8px 0 4px;
+  }
+  .eyebrow {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .lang-switch {
+    display: inline-flex;
+    gap: 6px;
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.22);
+    padding: 5px;
+    border-radius: 999px;
+  }
+  .lang-switch button {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 0.03em;
+    border: none;
+    background: transparent;
+    color: var(--blanco);
+    padding: 7px 13px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .lang-switch button.active {
+    background: var(--blanco);
+    color: var(--marino);
   }
   .wrap {
     max-width: 720px;
-    margin: 0 auto;
-    padding: 48px 20px 96px;
+    margin: -68px auto 0;
+    padding: 0 16px 80px;
   }
-  header {
-    margin-bottom: 32px;
+  .panel {
+    background: var(--blanco);
+    border-radius: 28px;
+    padding: 30px 26px 34px;
+    box-shadow: 0 8px 0 var(--marino-a20);
   }
   h1 {
-    font-size: 28px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: 21px;
     margin: 0 0 6px;
+    color: var(--marino);
   }
   .updated {
-    color: var(--muted);
-    font-size: 14px;
-    margin: 0;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--meta-ink);
+    margin: 0 0 22px;
   }
   h2 {
-    font-size: 19px;
-    margin: 36px 0 10px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 16.5px;
+    color: var(--marino);
+    margin: 30px 0 10px;
   }
-  p, li {
-    font-size: 15.5px;
+  p,
+  li {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  p {
+    margin: 0 0 12px;
   }
   ul {
+    margin: 0;
     padding-left: 20px;
   }
   li {
     margin-bottom: 6px;
   }
   .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 18px 20px;
-    margin: 20px 0;
+    background: var(--cielo-100);
+    border-radius: 20px;
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+  .card-title {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 14.5px;
+    color: var(--marino);
+    margin: 0 0 8px;
+  }
+  .card ul {
+    margin: 0;
   }
   a {
-    color: var(--accent);
+    color: var(--coral);
+    text-decoration: none;
+    font-weight: 700;
+  }
+  a:hover {
+    color: var(--coral-700);
   }
   .lang-note {
-    color: var(--muted);
-    font-size: 13.5px;
-    margin-top: 48px;
+    color: var(--meta-ink);
+    font-size: 13px;
+    margin-top: 36px;
     padding-top: 16px;
-    border-top: 1px solid var(--border);
+    border-top: 2px solid var(--cielo-100);
   }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>Política de privacidad de 7 Families</h1>
-    <p class="updated">Última actualización: agosto de 2026</p>
-  </header>
-
-  <p>
-    7 Families es un juego de cartas ("Jeu des 7 familles") desarrollado por <strong>Seny Labs</strong>.
-    Esta página explica qué datos recoge la app, para qué los usamos y qué derechos tienes sobre ellos.
-  </p>
-
-  <h2>Quién es el responsable</h2>
-  <p>
-    Seny Labs es el responsable del tratamiento de los datos descritos en esta política.
-    Puedes contactar con nosotros en
-    <a href="mailto:senylabs.studio@gmail.com">senylabs.studio@gmail.com</a> para cualquier
-    consulta o para ejercer tus derechos.
-  </p>
-
-  <h2>Qué datos recogemos</h2>
-  <div class="card">
-    <p><strong>Cuenta</strong></p>
-    <ul>
-      <li>Puedes jugar como invitado (sesión anónima), sin dar ningún dato personal.</li>
-      <li>Si creas una cuenta con email, guardamos ese email y una contraseña cifrada.</li>
-      <li>
-        Si inicias sesión con Google o Apple, solo recibimos el identificador necesario para
-        autenticarte — no accedemos a tu lista de contactos, fotos ni ningún otro dato de esas
-        cuentas.
-      </li>
-    </ul>
-  </div>
-  <div class="card">
-    <p><strong>Perfil de juego</strong></p>
-    <ul>
-      <li>Nombre de usuario, elegido por ti.</li>
-      <li>Un código corto para que tus amigos puedan añadirte.</li>
-      <li>Un avatar, elegido entre las cartas del propio juego (no es una foto tuya).</li>
-      <li>El idioma en el que juegas.</li>
-    </ul>
-  </div>
-  <div class="card">
-    <p><strong>Progreso y economía del juego</strong></p>
-    <ul>
-      <li>Tu colección de cartas, monedas, sobres y progreso del pase de temporada.</li>
-      <li>Las monedas del juego son <strong>moneda virtual sin ningún valor monetario real</strong> — no procesamos pagos con dinero real ni tarjetas dentro del juego.</li>
-    </ul>
-  </div>
-  <div class="card">
-    <p><strong>Funciones sociales y multijugador</strong></p>
-    <ul>
-      <li>Tu lista de amigos y las solicitudes de amistad.</li>
-      <li>Las partidas multijugador en las que participas y las jugadas que haces en ellas (qué carta pides y a quién), necesarias para que el resto de jugadores vea la partida en tiempo real.</li>
-      <li>Las ofertas de intercambio de cartas que creas o aceptas.</li>
-    </ul>
-  </div>
-  <div class="card">
-    <p><strong>Notificaciones</strong></p>
-    <ul>
-      <li>
-        Si aceptas recibir notificaciones, guardamos un identificador de tu dispositivo (token de
-        push) para poder avisarte de invitaciones a partidas u ofertas de intercambio. Puedes
-        desactivarlas en cualquier momento desde los ajustes de tu dispositivo.
-      </li>
-    </ul>
+  <div class="hero">
+    <div class="eyebrow">7 Families</div>
+    <div class="wordmark" data-i18n="wordmark">Privacidad</div>
+    <div class="lang-switch">
+      <button data-lang-btn="es">ES</button>
+      <button data-lang-btn="ca">CA</button>
+      <button data-lang-btn="fr">FR</button>
+      <button data-lang-btn="en">EN</button>
+      <button data-lang-btn="pt">PT</button>
+    </div>
   </div>
 
-  <h2>Qué NO hacemos</h2>
-  <ul>
-    <li>No usamos redes publicitarias ni herramientas de seguimiento con fines de publicidad.</li>
-    <li>No vendemos tus datos a terceros.</li>
-    <li>No recogemos tu ubicación.</li>
-  </ul>
+  <div class="wrap">
+    <div class="panel">
+      <h1 data-i18n="h1"></h1>
+      <p class="updated" data-i18n="updated"></p>
 
-  <h2>Para qué usamos tus datos</h2>
-  <p>
-    Únicamente para hacer funcionar el juego: identificarte, guardar tu progreso, mostrarte las
-    partidas y funciones sociales (amigos, intercambios, invitaciones) y avisarte de eventos
-    relevantes mediante notificaciones.
-  </p>
+      <p data-i18n="intro"></p>
 
-  <h2>Con quién compartimos datos</h2>
-  <p>
-    Usamos proveedores externos únicamente como infraestructura técnica para operar la app, nunca
-    con fines propios de esos proveedores:
-  </p>
-  <ul>
-    <li><strong>Supabase</strong> — aloja nuestra base de datos y gestiona la autenticación.</li>
-    <li><strong>Expo</strong> — entrega las notificaciones push a tu dispositivo.</li>
-    <li><strong>Google / Apple</strong> — solo si eliges iniciar sesión con esas cuentas.</li>
-  </ul>
+      <h2 data-i18n="responsableHeading"></h2>
+      <p data-i18n="responsableText"></p>
 
-  <h2>Menores de edad</h2>
-  <p>
-    7 Families no está dirigida específicamente a menores de 13 años y no recogemos
-    conscientemente datos de menores de esa edad sin el consentimiento de sus padres o tutores.
-    Si crees que un menor nos ha facilitado datos personales, escríbenos y lo eliminaremos.
-  </p>
+      <h2 data-i18n="dataHeading"></h2>
 
-  <h2>Tus derechos</h2>
-  <p>
-    Puedes solicitarnos en cualquier momento acceder a tus datos, corregirlos o eliminar tu
-    cuenta y todos los datos asociados a ella escribiendo a
-    <a href="mailto:senylabs.studio@gmail.com">senylabs.studio@gmail.com</a>. Responderemos a tu
-    solicitud en un plazo razonable.
-  </p>
+      <div class="card">
+        <p class="card-title" data-i18n="cardAccountTitle"></p>
+        <ul data-i18n="cardAccountList"></ul>
+      </div>
+      <div class="card">
+        <p class="card-title" data-i18n="cardProfileTitle"></p>
+        <ul data-i18n="cardProfileList"></ul>
+      </div>
+      <div class="card">
+        <p class="card-title" data-i18n="cardProgressTitle"></p>
+        <ul data-i18n="cardProgressList"></ul>
+      </div>
+      <div class="card">
+        <p class="card-title" data-i18n="cardSocialTitle"></p>
+        <ul data-i18n="cardSocialList"></ul>
+      </div>
+      <div class="card">
+        <p class="card-title" data-i18n="cardNotifTitle"></p>
+        <ul data-i18n="cardNotifList"></ul>
+      </div>
 
-  <h2>Cuánto tiempo conservamos tus datos</h2>
-  <p>
-    Conservamos tus datos mientras tu cuenta esté activa. Si solicitas eliminar tu cuenta,
-    borramos tus datos personales y de juego salvo que la ley nos obligue a conservar algo
-    durante más tiempo.
-  </p>
+      <h2 data-i18n="notDoHeading"></h2>
+      <ul data-i18n="notDoList"></ul>
 
-  <h2>Cambios en esta política</h2>
-  <p>
-    Si cambiamos esta política de forma relevante, actualizaremos la fecha de arriba y, si el
-    cambio es significativo, te avisaremos dentro de la app.
-  </p>
+      <h2 data-i18n="useHeading"></h2>
+      <p data-i18n="useText"></p>
 
-  <p class="lang-note">
-    This page is also available in English on request — write to
-    <a href="mailto:senylabs.studio@gmail.com">senylabs.studio@gmail.com</a> and we'll send you a
-    translated copy.
-  </p>
-</div>
+      <h2 data-i18n="shareHeading"></h2>
+      <p data-i18n="shareText"></p>
+      <ul data-i18n="shareList"></ul>
+
+      <h2 data-i18n="minorsHeading"></h2>
+      <p data-i18n="minorsText"></p>
+
+      <h2 data-i18n="rightsHeading"></h2>
+      <p data-i18n="rightsText"></p>
+
+      <h2 data-i18n="retentionHeading"></h2>
+      <p data-i18n="retentionText"></p>
+
+      <h2 data-i18n="changesHeading"></h2>
+      <p data-i18n="changesText"></p>
+
+      <p class="lang-note" data-i18n="supportLink"></p>
+    </div>
+  </div>
+
+<script>
+  var STRINGS = {
+    es: {
+      wordmark: 'Privacidad',
+      h1: 'Política de privacidad de 7 Families',
+      updated: 'Última actualización: agosto de 2026',
+      intro: '7 Families es un juego de cartas ("Jeu des 7 familles") desarrollado por <strong>Seny Labs</strong>. Esta página explica qué datos recoge la app, para qué los usamos y qué derechos tienes sobre ellos.',
+      responsableHeading: 'Quién es el responsable',
+      responsableText: 'Seny Labs es el responsable del tratamiento de los datos descritos en esta política. Puedes contactar con nosotros en <a href="mailto:senylabs.studio@gmail.com">senylabs.studio@gmail.com</a> para cualquier consulta o para ejercer tus derechos.',
+      dataHeading: 'Qué datos recogemos',
+      cardAccountTitle: 'Cuenta',
+      cardAccountList: '<li>Puedes jugar como invitado (sesión anónima), sin dar ningún dato personal.</li><li>Si creas una cuenta con email, guardamos ese email y una contraseña cifrada.</li><li>Si inicias sesión con Google o Apple, solo recibimos el identificador necesario para autenticarte — no accedemos a tu lista de contactos, fotos ni ningún otro dato de esas cuentas.</li>',
+      cardProfileTitle: 'Perfil de juego',
+      cardProfileList: '<li>Nombre de usuario, elegido por ti.</li><li>Un código corto para que tus amigos puedan añadirte.</li><li>Un avatar, elegido entre las cartas del propio juego (no es una foto tuya).</li><li>El idioma en el que juegas.</li>',
+      cardProgressTitle: 'Progreso y economía del juego',
+      cardProgressList: '<li>Tu colección de cartas, monedas, sobres y progreso del pase de temporada.</li><li>Las monedas del juego son <strong>moneda virtual sin ningún valor monetario real</strong>. Si compras el pase de temporada premium, el pago se procesa a través de Apple/RevenueCat — nosotros no vemos ni guardamos tus datos de pago.</li>',
+      cardSocialTitle: 'Funciones sociales y multijugador',
+      cardSocialList: '<li>Tu lista de amigos y las solicitudes de amistad.</li><li>Las partidas multijugador en las que participas y las jugadas que haces en ellas (qué carta pides y a quién), necesarias para que el resto de jugadores vea la partida en tiempo real.</li><li>Las ofertas de intercambio de cartas que creas o aceptas.</li>',
+      cardNotifTitle: 'Notificaciones',
+      cardNotifList: '<li>Si aceptas recibir notificaciones, guardamos un identificador de tu dispositivo (token de push) para poder avisarte de invitaciones a partidas u ofertas de intercambio. Puedes desactivarlas en cualquier momento desde los ajustes de tu dispositivo.</li>',
+      notDoHeading: 'Qué NO hacemos',
+      notDoList: '<li>No usamos redes publicitarias ni herramientas de seguimiento con fines de publicidad.</li><li>No vendemos tus datos a terceros.</li><li>No recogemos tu ubicación.</li>',
+      useHeading: 'Para qué usamos tus datos',
+      useText: 'Únicamente para hacer funcionar el juego: identificarte, guardar tu progreso, mostrarte las partidas y funciones sociales (amigos, intercambios, invitaciones) y avisarte de eventos relevantes mediante notificaciones.',
+      shareHeading: 'Con quién compartimos datos',
+      shareText: 'Usamos proveedores externos únicamente como infraestructura técnica para operar la app, nunca con fines propios de esos proveedores:',
+      shareList: '<li><strong>Supabase</strong> — aloja nuestra base de datos y gestiona la autenticación.</li><li><strong>Expo</strong> — entrega las notificaciones push a tu dispositivo.</li><li><strong>Google / Apple</strong> — solo si eliges iniciar sesión con esas cuentas.</li><li><strong>Apple / RevenueCat</strong> — solo si compras el pase de temporada premium, para procesar el pago.</li>',
+      minorsHeading: 'Menores de edad',
+      minorsText: '7 Families no está dirigida específicamente a menores de 13 años y no recogemos conscientemente datos de menores de esa edad sin el consentimiento de sus padres o tutores. Si crees que un menor nos ha facilitado datos personales, escríbenos y lo eliminaremos.',
+      rightsHeading: 'Tus derechos',
+      rightsText: 'Puedes solicitarnos en cualquier momento acceder a tus datos, corregirlos o eliminar tu cuenta y todos los datos asociados a ella. La forma más rápida es hacerlo tú mismo desde la app: <strong>Ajustes → Eliminar cuenta</strong>. También puedes escribirnos a <a href="mailto:senylabs.studio@gmail.com">senylabs.studio@gmail.com</a> — responderemos a tu solicitud en un plazo razonable.',
+      retentionHeading: 'Cuánto tiempo conservamos tus datos',
+      retentionText: 'Conservamos tus datos mientras tu cuenta esté activa. Si eliminas tu cuenta, borramos tus datos personales y de juego salvo que la ley nos obligue a conservar algo durante más tiempo.',
+      changesHeading: 'Cambios en esta política',
+      changesText: 'Si cambiamos esta política de forma relevante, actualizaremos la fecha de arriba y, si el cambio es significativo, te avisaremos dentro de la app.',
+      supportLink: '¿Necesitas ayuda? Visita nuestra <a href="./support.html">página de soporte</a>.',
+    },
+    ca: {
+      wordmark: 'Privadesa',
+      h1: 'Política de privadesa de 7 Families',
+      updated: 'Última actualització: agost de 2026',
+      intro: '7 Families és un joc de cartes ("Jeu des 7 familles") desenvolupat per <strong>Seny Labs</strong>. Aquesta pàgina explica quines dades recull l’app, per a què les fem servir i quins drets tens sobre elles.',
+      responsableHeading: 'Qui n’és el responsable',
+      responsableText: 'Seny Labs és el responsable del tractament de les dades descrites en aquesta política. Pots contactar amb nosaltres a <a href="mailto:senylabs.studio@gmail.com">senylabs.studio@gmail.com</a> per a qualsevol consulta o per exercir els teus drets.',
+      dataHeading: 'Quines dades recollim',
+      cardAccountTitle: 'Compte',
+      cardAccountList: '<li>Pots jugar com a convidat (sessió anònima), sense donar cap dada personal.</li><li>Si crees un compte amb email, guardem aquell email i una contrasenya xifrada.</li><li>Si inicies sessió amb Google o Apple, només rebem l’identificador necessari per autenticar-te — no accedim a la teva llista de contactes, fotos ni cap altra dada d’aquests comptes.</li>',
+      cardProfileTitle: 'Perfil de joc',
+      cardProfileList: '<li>Nom d’usuari, triat per tu.</li><li>Un codi curt perquè els teus amics et puguin afegir.</li><li>Un avatar, triat entre les cartes del mateix joc (no és una foto teva).</li><li>L’idioma en què jugues.</li>',
+      cardProgressTitle: 'Progrés i economia del joc',
+      cardProgressList: '<li>La teva col·lecció de cartes, monedes, sobres i progrés del passi de temporada.</li><li>Les monedes del joc són <strong>moneda virtual sense cap valor monetari real</strong>. Si compres el passi de temporada premium, el pagament es processa a través d’Apple/RevenueCat — nosaltres no veiem ni guardem les teves dades de pagament.</li>',
+      cardSocialTitle: 'Funcions socials i multijugador',
+      cardSocialList: '<li>La teva llista d’amics i les sol·licituds d’amistat.</li><li>Les partides multijugador en què participes i les jugades que hi fas (quina carta demanes i a qui), necessàries perquè la resta de jugadors vegin la partida en temps real.</li><li>Les ofertes d’intercanvi de cartes que crees o acceptes.</li>',
+      cardNotifTitle: 'Notificacions',
+      cardNotifList: '<li>Si acceptes rebre notificacions, guardem un identificador del teu dispositiu (token de push) per poder avisar-te d’invitacions a partides o ofertes d’intercanvi. Pots desactivar-les en qualsevol moment des dels ajustos del teu dispositiu.</li>',
+      notDoHeading: 'Què NO fem',
+      notDoList: '<li>No fem servir xarxes publicitàries ni eines de seguiment amb fins publicitaris.</li><li>No venem les teves dades a tercers.</li><li>No recollim la teva ubicació.</li>',
+      useHeading: 'Per a què fem servir les teves dades',
+      useText: 'Únicament per fer funcionar el joc: identificar-te, guardar el teu progrés, mostrar-te les partides i funcions socials (amics, intercanvis, invitacions) i avisar-te d’esdeveniments rellevants mitjançant notificacions.',
+      shareHeading: 'Amb qui compartim dades',
+      shareText: 'Fem servir proveïdors externs únicament com a infraestructura tècnica per operar l’app, mai amb fins propis d’aquests proveïdors:',
+      shareList: '<li><strong>Supabase</strong> — allotja la nostra base de dades i gestiona l’autenticació.</li><li><strong>Expo</strong> — envia les notificacions push al teu dispositiu.</li><li><strong>Google / Apple</strong> — només si tries iniciar sessió amb aquests comptes.</li><li><strong>Apple / RevenueCat</strong> — només si compres el passi de temporada premium, per processar el pagament.</li>',
+      minorsHeading: 'Menors d’edat',
+      minorsText: '7 Families no està dirigida específicament a menors de 13 anys i no recollim conscientment dades de menors d’aquesta edat sense el consentiment dels seus pares o tutors. Si creus que un menor ens ha facilitat dades personals, escriu-nos i les eliminarem.',
+      rightsHeading: 'Els teus drets',
+      rightsText: 'Pots demanar-nos en qualsevol moment accedir a les teves dades, corregir-les o eliminar el teu compte i totes les dades associades. La manera més ràpida és fer-ho tu mateix des de l’app: <strong>Ajustos → Elimina el compte</strong>. També pots escriure’ns a <a href="mailto:senylabs.studio@gmail.com">senylabs.studio@gmail.com</a> — respondrem la teva sol·licitud en un termini raonable.',
+      retentionHeading: 'Quant de temps conservem les teves dades',
+      retentionText: 'Conservem les teves dades mentre el teu compte estigui actiu. Si elimines el teu compte, esborrem les teves dades personals i de joc llevat que la llei ens obligui a conservar-ne alguna durant més temps.',
+      changesHeading: 'Canvis en aquesta política',
+      changesText: 'Si canviem aquesta política de forma rellevant, actualitzarem la data de dalt i, si el canvi és significatiu, t’avisarem dins de l’app.',
+      supportLink: 'Necessites ajuda? Visita la nostra <a href="./support.html">pàgina de suport</a>.',
+    },
+    fr: {
+      wordmark: 'Confidentialité',
+      h1: 'Politique de confidentialité de 7 Families',
+      updated: 'Dernière mise à jour : août 2026',
+      intro: '7 Families est un jeu de cartes ("Jeu des 7 familles") développé par <strong>Seny Labs</strong>. Cette page explique quelles données l’app collecte, à quoi elles servent et quels droits tu as sur elles.',
+      responsableHeading: 'Qui est responsable',
+      responsableText: 'Seny Labs est responsable du traitement des données décrites dans cette politique. Tu peux nous contacter à <a href="mailto:senylabs.studio@gmail.com">senylabs.studio@gmail.com</a> pour toute question ou pour exercer tes droits.',
+      dataHeading: 'Quelles données nous collectons',
+      cardAccountTitle: 'Compte',
+      cardAccountList: '<li>Tu peux jouer en tant qu’invité (session anonyme), sans fournir aucune donnée personnelle.</li><li>Si tu crées un compte avec un email, nous stockons cet email et un mot de passe chiffré.</li><li>Si tu te connectes avec Google ou Apple, nous ne recevons que l’identifiant nécessaire pour t’authentifier — nous n’accédons ni à tes contacts, ni à tes photos, ni à aucune autre donnée de ces comptes.</li>',
+      cardProfileTitle: 'Profil de jeu',
+      cardProfileList: '<li>Nom d’utilisateur, choisi par toi.</li><li>Un code court pour que tes amis puissent t’ajouter.</li><li>Un avatar, choisi parmi les cartes du jeu lui-même (pas une photo de toi).</li><li>La langue dans laquelle tu joues.</li>',
+      cardProgressTitle: 'Progression et économie du jeu',
+      cardProgressList: '<li>Ta collection de cartes, tes pièces, tes sobres et ta progression du pass de saison.</li><li>Les pièces du jeu sont une <strong>monnaie virtuelle sans aucune valeur monétaire réelle</strong>. Si tu achètes le pass de saison premium, le paiement est traité via Apple/RevenueCat — nous ne voyons ni ne stockons tes données de paiement.</li>',
+      cardSocialTitle: 'Fonctions sociales et multijoueur',
+      cardSocialList: '<li>Ta liste d’amis et les demandes d’amitié.</li><li>Les parties multijoueurs auxquelles tu participes et les actions que tu y fais (quelle carte tu demandes et à qui), nécessaires pour que les autres joueurs voient la partie en temps réel.</li><li>Les offres d’échange de cartes que tu crées ou acceptes.</li>',
+      cardNotifTitle: 'Notifications',
+      cardNotifList: '<li>Si tu acceptes de recevoir des notifications, nous stockons un identifiant de ton appareil (jeton push) pour pouvoir te prévenir d’invitations à des parties ou d’offres d’échange. Tu peux les désactiver à tout moment depuis les réglages de ton appareil.</li>',
+      notDoHeading: 'Ce que nous NE faisons PAS',
+      notDoList: '<li>Nous n’utilisons pas de réseaux publicitaires ni d’outils de suivi à des fins publicitaires.</li><li>Nous ne vendons pas tes données à des tiers.</li><li>Nous ne collectons pas ta localisation.</li>',
+      useHeading: 'À quoi servent tes données',
+      useText: 'Uniquement à faire fonctionner le jeu : t’identifier, sauvegarder ta progression, t’afficher les parties et fonctions sociales (amis, échanges, invitations) et te prévenir d’événements pertinents via des notifications.',
+      shareHeading: 'Avec qui nous partageons des données',
+      shareText: 'Nous utilisons des prestataires externes uniquement comme infrastructure technique pour faire fonctionner l’app, jamais à des fins propres à ces prestataires :',
+      shareList: '<li><strong>Supabase</strong> — héberge notre base de données et gère l’authentification.</li><li><strong>Expo</strong> — délivre les notifications push à ton appareil.</li><li><strong>Google / Apple</strong> — uniquement si tu choisis de te connecter avec ces comptes.</li><li><strong>Apple / RevenueCat</strong> — uniquement si tu achètes le pass de saison premium, pour traiter le paiement.</li>',
+      minorsHeading: 'Mineurs',
+      minorsText: '7 Families ne s’adresse pas spécifiquement aux moins de 13 ans et ne collecte pas sciemment de données de mineurs de cet âge sans le consentement de leurs parents ou tuteurs. Si tu penses qu’un mineur nous a fourni des données personnelles, écris-nous et nous les supprimerons.',
+      rightsHeading: 'Tes droits',
+      rightsText: 'Tu peux à tout moment nous demander d’accéder à tes données, de les corriger, ou de supprimer ton compte et toutes les données qui y sont associées. Le plus rapide est de le faire toi-même depuis l’app : <strong>Réglages → Supprimer le compte</strong>. Tu peux aussi nous écrire à <a href="mailto:senylabs.studio@gmail.com">senylabs.studio@gmail.com</a> — nous répondrons à ta demande dans un délai raisonnable.',
+      retentionHeading: 'Combien de temps nous conservons tes données',
+      retentionText: 'Nous conservons tes données tant que ton compte est actif. Si tu supprimes ton compte, nous effaçons tes données personnelles et de jeu, sauf si la loi nous oblige à en conserver certaines plus longtemps.',
+      changesHeading: 'Changements de cette politique',
+      changesText: 'Si nous modifions cette politique de façon significative, nous mettrons à jour la date ci-dessus et, si le changement est important, nous te préviendrons dans l’app.',
+      supportLink: 'Besoin d’aide ? Visite notre <a href="./support.html">page d’assistance</a>.',
+    },
+    en: {
+      wordmark: 'Privacy',
+      h1: '7 Families privacy policy',
+      updated: 'Last updated: August 2026',
+      intro: '7 Families is a card game ("Jeu des 7 familles") developed by <strong>Seny Labs</strong>. This page explains what data the app collects, what we use it for, and what rights you have over it.',
+      responsableHeading: 'Who is responsible',
+      responsableText: 'Seny Labs is the data controller for the data described in this policy. You can contact us at <a href="mailto:senylabs.studio@gmail.com">senylabs.studio@gmail.com</a> for any question or to exercise your rights.',
+      dataHeading: 'What data we collect',
+      cardAccountTitle: 'Account',
+      cardAccountList: '<li>You can play as a guest (anonymous session), without giving any personal data.</li><li>If you create an account with email, we store that email and an encrypted password.</li><li>If you sign in with Google or Apple, we only receive the identifier needed to authenticate you — we don’t access your contacts, photos, or any other data from those accounts.</li>',
+      cardProfileTitle: 'Game profile',
+      cardProfileList: '<li>Username, chosen by you.</li><li>A short code so your friends can add you.</li><li>An avatar, chosen from the game’s own cards (not a photo of you).</li><li>The language you play in.</li>',
+      cardProgressTitle: 'Game progress and economy',
+      cardProgressList: '<li>Your card collection, coins, packs and season pass progress.</li><li>The game’s coins are a <strong>virtual currency with no real monetary value</strong>. If you buy the premium season pass, the payment is processed through Apple/RevenueCat — we never see or store your payment details.</li>',
+      cardSocialTitle: 'Social and multiplayer features',
+      cardSocialList: '<li>Your friends list and friend requests.</li><li>The multiplayer matches you take part in and the moves you make in them (which card you ask for and from whom), needed so other players can see the match in real time.</li><li>The card trade offers you create or accept.</li>',
+      cardNotifTitle: 'Notifications',
+      cardNotifList: '<li>If you agree to receive notifications, we store a device identifier (push token) so we can notify you about match invitations or trade offers. You can turn them off at any time from your device settings.</li>',
+      notDoHeading: 'What we DON’T do',
+      notDoList: '<li>We don’t use ad networks or tracking tools for advertising purposes.</li><li>We don’t sell your data to third parties.</li><li>We don’t collect your location.</li>',
+      useHeading: 'What we use your data for',
+      useText: 'Only to make the game work: identifying you, saving your progress, showing you matches and social features (friends, trades, invitations), and notifying you about relevant events.',
+      shareHeading: 'Who we share data with',
+      shareText: 'We use external providers only as technical infrastructure to run the app, never for their own purposes:',
+      shareList: '<li><strong>Supabase</strong> — hosts our database and handles authentication.</li><li><strong>Expo</strong> — delivers push notifications to your device.</li><li><strong>Google / Apple</strong> — only if you choose to sign in with those accounts.</li><li><strong>Apple / RevenueCat</strong> — only if you buy the premium season pass, to process the payment.</li>',
+      minorsHeading: 'Minors',
+      minorsText: '7 Families is not specifically directed at children under 13, and we don’t knowingly collect data from children under that age without parental or guardian consent. If you believe a minor has provided us with personal data, please write to us and we’ll remove it.',
+      rightsHeading: 'Your rights',
+      rightsText: 'You can ask us at any time to access your data, correct it, or delete your account and all the data associated with it. The fastest way is to do it yourself from the app: <strong>Settings → Delete account</strong>. You can also write to us at <a href="mailto:senylabs.studio@gmail.com">senylabs.studio@gmail.com</a> — we’ll respond to your request within a reasonable time.',
+      retentionHeading: 'How long we keep your data',
+      retentionText: 'We keep your data while your account is active. If you delete your account, we erase your personal and game data unless the law requires us to keep some of it for longer.',
+      changesHeading: 'Changes to this policy',
+      changesText: 'If we make a significant change to this policy, we’ll update the date above and, if the change is significant, notify you inside the app.',
+      supportLink: 'Need help? Visit our <a href="./support.html">support page</a>.',
+    },
+    pt: {
+      wordmark: 'Privacidade',
+      h1: 'Política de privacidade de 7 Families',
+      updated: 'Última atualização: agosto de 2026',
+      intro: '7 Families é um jogo de cartas ("Jeu des 7 familles") desenvolvido pela <strong>Seny Labs</strong>. Esta página explica que dados a app recolhe, para que os usamos e que direitos tens sobre eles.',
+      responsableHeading: 'Quem é o responsável',
+      responsableText: 'A Seny Labs é a responsável pelo tratamento dos dados descritos nesta política. Podes contactar-nos em <a href="mailto:senylabs.studio@gmail.com">senylabs.studio@gmail.com</a> para qualquer dúvida ou para exercer os teus direitos.',
+      dataHeading: 'Que dados recolhemos',
+      cardAccountTitle: 'Conta',
+      cardAccountList: '<li>Podes jogar como convidado (sessão anónima), sem dar nenhum dado pessoal.</li><li>Se criares uma conta com email, guardamos esse email e uma palavra-passe encriptada.</li><li>Se iniciares sessão com Google ou Apple, só recebemos o identificador necessário para te autenticar — não acedemos aos teus contactos, fotos nem a qualquer outro dado dessas contas.</li>',
+      cardProfileTitle: 'Perfil de jogo',
+      cardProfileList: '<li>Nome de utilizador, escolhido por ti.</li><li>Um código curto para que os teus amigos te possam adicionar.</li><li>Um avatar, escolhido entre as cartas do próprio jogo (não é uma foto tua).</li><li>O idioma em que jogas.</li>',
+      cardProgressTitle: 'Progresso e economia do jogo',
+      cardProgressList: '<li>A tua coleção de cartas, moedas, sobres e progresso do passe de temporada.</li><li>As moedas do jogo são <strong>moeda virtual sem qualquer valor monetário real</strong>. Se comprares o passe de temporada premium, o pagamento é processado através da Apple/RevenueCat — nós não vemos nem guardamos os teus dados de pagamento.</li>',
+      cardSocialTitle: 'Funcionalidades sociais e multijogador',
+      cardSocialList: '<li>A tua lista de amigos e os pedidos de amizade.</li><li>As partidas multijogador em que participas e as jogadas que fazes nelas (que carta pedes e a quem), necessárias para que os outros jogadores vejam a partida em tempo real.</li><li>As ofertas de troca de cartas que crias ou aceitas.</li>',
+      cardNotifTitle: 'Notificações',
+      cardNotifList: '<li>Se aceitares receber notificações, guardamos um identificador do teu dispositivo (token de push) para te podermos avisar de convites para partidas ou ofertas de troca. Podes desativá-las a qualquer momento nas definições do teu dispositivo.</li>',
+      notDoHeading: 'O que NÃO fazemos',
+      notDoList: '<li>Não usamos redes publicitárias nem ferramentas de rastreio com fins publicitários.</li><li>Não vendemos os teus dados a terceiros.</li><li>Não recolhemos a tua localização.</li>',
+      useHeading: 'Para que usamos os teus dados',
+      useText: 'Apenas para fazer o jogo funcionar: identificar-te, guardar o teu progresso, mostrar-te as partidas e funcionalidades sociais (amigos, trocas, convites) e avisar-te de eventos relevantes através de notificações.',
+      shareHeading: 'Com quem partilhamos dados',
+      shareText: 'Usamos fornecedores externos apenas como infraestrutura técnica para operar a app, nunca para fins próprios desses fornecedores:',
+      shareList: '<li><strong>Supabase</strong> — aloja a nossa base de dados e gere a autenticação.</li><li><strong>Expo</strong> — entrega as notificações push ao teu dispositivo.</li><li><strong>Google / Apple</strong> — só se escolheres iniciar sessão com essas contas.</li><li><strong>Apple / RevenueCat</strong> — só se comprares o passe de temporada premium, para processar o pagamento.</li>',
+      minorsHeading: 'Menores de idade',
+      minorsText: '7 Families não é dirigida especificamente a menores de 13 anos e não recolhemos conscientemente dados de menores dessa idade sem o consentimento dos pais ou tutores. Se achas que um menor nos facultou dados pessoais, escreve-nos e vamos eliminá-los.',
+      rightsHeading: 'Os teus direitos',
+      rightsText: 'Podes pedir-nos a qualquer momento para aceder aos teus dados, corrigi-los ou eliminar a tua conta e todos os dados associados a ela. A forma mais rápida é fazê-lo tu mesmo na app: <strong>Definições → Eliminar conta</strong>. Também podes escrever-nos para <a href="mailto:senylabs.studio@gmail.com">senylabs.studio@gmail.com</a> — responderemos ao teu pedido num prazo razoável.',
+      retentionHeading: 'Quanto tempo conservamos os teus dados',
+      retentionText: 'Conservamos os teus dados enquanto a tua conta estiver ativa. Se eliminares a tua conta, apagamos os teus dados pessoais e de jogo, salvo se a lei nos obrigar a conservar algum durante mais tempo.',
+      changesHeading: 'Alterações a esta política',
+      changesText: 'Se alterarmos esta política de forma relevante, atualizaremos a data acima e, se a alteração for significativa, avisamos-te dentro da app.',
+      supportLink: 'Precisas de ajuda? Visita a nossa <a href="./support.html">página de suporte</a>.',
+    },
+  };
+
+  var SUPPORTED = ['es', 'ca', 'fr', 'en', 'pt'];
+
+  function applyLang(lang) {
+    if (!STRINGS[lang]) lang = 'es';
+    document.documentElement.lang = lang;
+    document.title = STRINGS[lang].h1;
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n');
+      if (STRINGS[lang][key] != null) el.innerHTML = STRINGS[lang][key];
+    });
+    document.querySelectorAll('[data-lang-btn]').forEach(function (btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-lang-btn') === lang);
+    });
+    try {
+      localStorage.setItem('lang', lang);
+    } catch (e) {}
+  }
+
+  var saved = null;
+  try {
+    saved = localStorage.getItem('lang');
+  } catch (e) {}
+  var browserLang = ((navigator.language || 'es').slice(0, 2) || 'es').toLowerCase();
+  var initial = SUPPORTED.indexOf(saved) !== -1 ? saved : SUPPORTED.indexOf(browserLang) !== -1 ? browserLang : 'es';
+  applyLang(initial);
+
+  document.querySelectorAll('[data-lang-btn]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      applyLang(btn.getAttribute('data-lang-btn'));
+    });
+  });
+</script>
 </body>
 </html>

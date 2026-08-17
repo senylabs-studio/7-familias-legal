@@ -4,122 +4,310 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Soporte — 7 Families</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&display=swap"
+  rel="stylesheet"
+/>
 <style>
   :root {
-    color-scheme: light dark;
-    --bg: #faf6ee;
-    --ink: #2a1e10;
-    --muted: #6b5c47;
-    --accent: #d3762b;
-    --card: #ffffff;
-    --border: #e8ddc9;
+    --marino: #0d4b6b;
+    --marino-a20: rgba(13, 75, 107, 0.2);
+    --marino-faint: rgba(13, 75, 107, 0.45);
+    --cielo-100: #e3f3fa;
+    --cielo-light: #7be3ff;
+    --cielo: #23b7f0;
+    --cielo-dark: #1596cc;
+    --coral: #ff5d73;
+    --coral-100: #ffe6ea;
+    --coral-700: #c93b50;
+    --meta-ink: #4a7f99;
+    --blanco: #ffffff;
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #1c1712;
-      --ink: #f3ead9;
-      --muted: #b9ab92;
-      --accent: #f0a15c;
-      --card: #262019;
-      --border: #3a3125;
-    }
+  * {
+    box-sizing: border-box;
   }
-  * { box-sizing: border-box; }
   body {
     margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    line-height: 1.6;
+    min-height: 100vh;
+    background: linear-gradient(180deg, var(--cielo-light) 0%, var(--cielo) 45%, var(--cielo-dark) 100%);
+    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--marino);
+  }
+  .hero {
+    padding: 28px 16px 96px;
+    text-align: center;
+  }
+  .wordmark {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    color: var(--blanco);
+    -webkit-text-stroke: 6px var(--marino);
+    paint-order: stroke fill;
+    letter-spacing: 0.01em;
+    margin: 8px 0 4px;
+  }
+  .eyebrow {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .lang-switch {
+    display: inline-flex;
+    gap: 6px;
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.22);
+    padding: 5px;
+    border-radius: 999px;
+  }
+  .lang-switch button {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 0.03em;
+    border: none;
+    background: transparent;
+    color: var(--blanco);
+    padding: 7px 13px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .lang-switch button.active {
+    background: var(--blanco);
+    color: var(--marino);
   }
   .wrap {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 48px 20px 96px;
+    max-width: 700px;
+    margin: -68px auto 0;
+    padding: 0 16px 80px;
   }
-  header {
-    margin-bottom: 32px;
+  .panel {
+    background: var(--blanco);
+    border-radius: 28px;
+    padding: 30px 26px 34px;
+    box-shadow: 0 8px 0 var(--marino-a20);
   }
   h1 {
-    font-size: 28px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
     margin: 0 0 6px;
+    color: var(--marino);
   }
-  .updated {
-    color: var(--muted);
+  .subtitle {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
     font-size: 14px;
-    margin: 0;
+    color: var(--meta-ink);
+    margin: 0 0 22px;
   }
   h2 {
-    font-size: 19px;
-    margin: 36px 0 10px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--marino);
+    margin: 30px 0 12px;
   }
-  p, li {
-    font-size: 15.5px;
-  }
-  ul {
-    padding-left: 20px;
-  }
-  li {
-    margin-bottom: 6px;
+  p {
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0 0 12px;
   }
   .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
+    background: var(--cielo-100);
+    border-radius: 20px;
     padding: 18px 20px;
-    margin: 20px 0;
+    margin: 18px 0;
+    text-align: center;
+  }
+  .card a {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
   }
   a {
-    color: var(--accent);
+    color: var(--coral);
+    text-decoration: none;
+    font-weight: 700;
   }
-  .contact-email {
-    font-size: 18px;
+  a:hover {
+    color: var(--coral-700);
+  }
+  .faq-item {
+    margin-bottom: 20px;
+  }
+  .faq-q {
+    font-family: 'Fredoka', sans-serif;
     font-weight: 600;
+    font-size: 15px;
+    color: var(--marino);
+    margin: 0 0 4px;
+  }
+  .faq-a {
+    color: var(--marino);
+    opacity: 0.85;
   }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>Soporte de 7 Families</h1>
-    <p class="updated">¿Necesitas ayuda? Estamos aquí.</p>
-  </header>
-
-  <p>
-    Si tienes cualquier problema jugando a <strong>7 Families</strong>, una duda sobre tu cuenta,
-    o quieres reportar un error, escríbenos:
-  </p>
-
-  <div class="card">
-    <p class="contact-email">
-      <a href="mailto:senylabs.studio@gmail.com">senylabs.studio@gmail.com</a>
-    </p>
+  <div class="hero">
+    <div class="eyebrow">7 Families</div>
+    <div class="wordmark" data-i18n="wordmark">Soporte</div>
+    <div class="lang-switch">
+      <button data-lang-btn="es">ES</button>
+      <button data-lang-btn="ca">CA</button>
+      <button data-lang-btn="fr">FR</button>
+      <button data-lang-btn="en">EN</button>
+      <button data-lang-btn="pt">PT</button>
+    </div>
   </div>
 
-  <h2>Preguntas frecuentes</h2>
+  <div class="wrap">
+    <div class="panel">
+      <h1 data-i18n="h1"></h1>
+      <p class="subtitle" data-i18n="subtitle"></p>
 
-  <p><strong>¿Cómo elimino mi cuenta?</strong></p>
-  <p>
-    Puedes eliminar tu cuenta y todos tus datos directamente desde la app: ve a
-    <strong>Ajustes → Eliminar cuenta</strong>. La eliminación es inmediata y no se puede deshacer.
-  </p>
+      <p data-i18n="intro"></p>
 
-  <p><strong>¿Qué son las monedas y los sobres del juego?</strong></p>
-  <p>
-    Son moneda virtual propia del juego, sin ningún valor monetario real fuera de la app.
-  </p>
+      <div class="card">
+        <a href="mailto:senylabs.studio@gmail.com">senylabs.studio@gmail.com</a>
+      </div>
 
-  <p><strong>¿Perdí mi progreso al cambiar de dispositivo?</strong></p>
-  <p>
-    Si jugabas con una cuenta (email, Google o Apple), tu progreso está guardado en la nube y
-    puedes recuperarlo iniciando sesión con la misma cuenta en cualquier dispositivo. Si jugabas
-    como invitado, el progreso solo existe en ese dispositivo.
-  </p>
+      <h2 data-i18n="faqHeading"></h2>
 
-  <h2>Política de privacidad</h2>
-  <p>
-    Puedes consultarla aquí: <a href="./">Política de privacidad de 7 Families</a>.
-  </p>
-</div>
+      <div class="faq-item">
+        <p class="faq-q" data-i18n="q1"></p>
+        <p class="faq-a" data-i18n="a1"></p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q" data-i18n="q2"></p>
+        <p class="faq-a" data-i18n="a2"></p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q" data-i18n="q3"></p>
+        <p class="faq-a" data-i18n="a3"></p>
+      </div>
+
+      <h2 data-i18n="privacyHeading"></h2>
+      <p data-i18n="privacyLink"></p>
+    </div>
+  </div>
+
+<script>
+  var STRINGS = {
+    es: {
+      wordmark: 'Soporte',
+      h1: 'Soporte de 7 Families',
+      subtitle: '¿Necesitas ayuda? Estamos aquí.',
+      intro: 'Si tienes cualquier problema jugando a <strong>7 Families</strong>, una duda sobre tu cuenta, o quieres reportar un error, escríbenos:',
+      faqHeading: 'Preguntas frecuentes',
+      q1: '¿Cómo elimino mi cuenta?',
+      a1: 'Puedes eliminar tu cuenta y todos tus datos directamente desde la app: ve a <strong>Ajustes → Eliminar cuenta</strong>. La eliminación es inmediata y no se puede deshacer.',
+      q2: '¿Qué son las monedas y los sobres del juego?',
+      a2: 'Son moneda virtual propia del juego, sin ningún valor monetario real fuera de la app.',
+      q3: '¿Perdí mi progreso al cambiar de dispositivo?',
+      a3: 'Si jugabas con una cuenta (email, Google o Apple), tu progreso está guardado en la nube y puedes recuperarlo iniciando sesión con la misma cuenta en cualquier dispositivo. Si jugabas como invitado, el progreso solo existe en ese dispositivo.',
+      privacyHeading: 'Política de privacidad',
+      privacyLink: 'Puedes consultarla aquí: <a href="./">Política de privacidad de 7 Families</a>.',
+    },
+    ca: {
+      wordmark: 'Suport',
+      h1: 'Suport de 7 Families',
+      subtitle: 'Necessites ajuda? Som aquí.',
+      intro: 'Si tens qualsevol problema jugant a <strong>7 Families</strong>, un dubte sobre el teu compte, o vols reportar un error, escriu-nos:',
+      faqHeading: 'Preguntes freqüents',
+      q1: 'Com elimino el meu compte?',
+      a1: 'Pots eliminar el teu compte i totes les teves dades directament des de l’app: vés a <strong>Ajustos → Elimina el compte</strong>. L’eliminació és immediata i no es pot desfer.',
+      q2: 'Què són les monedes i els sobres del joc?',
+      a2: 'Són moneda virtual pròpia del joc, sense cap valor monetari real fora de l’app.',
+      q3: 'He perdut el meu progrés en canviar de dispositiu?',
+      a3: 'Si jugaves amb un compte (email, Google o Apple), el teu progrés està guardat al núvol i pots recuperar-lo iniciant sessió amb el mateix compte a qualsevol dispositiu. Si jugaves com a convidat, el progrés només existeix en aquell dispositiu.',
+      privacyHeading: 'Política de privadesa',
+      privacyLink: 'La pots consultar aquí: <a href="./">Política de privadesa de 7 Families</a>.',
+    },
+    fr: {
+      wordmark: 'Assistance',
+      h1: 'Assistance 7 Families',
+      subtitle: 'Besoin d’aide ? Nous sommes là.',
+      intro: 'Si tu rencontres un problème en jouant à <strong>7 Families</strong>, une question sur ton compte, ou si tu veux signaler un bug, écris-nous :',
+      faqHeading: 'Questions fréquentes',
+      q1: 'Comment supprimer mon compte ?',
+      a1: 'Tu peux supprimer ton compte et toutes tes données directement depuis l’app : va dans <strong>Réglages → Supprimer le compte</strong>. La suppression est immédiate et irréversible.',
+      q2: 'Que sont les pièces et les sobres du jeu ?',
+      a2: 'Ce sont une monnaie virtuelle propre au jeu, sans aucune valeur monétaire réelle en dehors de l’app.',
+      q3: 'Ai-je perdu ma progression en changeant d’appareil ?',
+      a3: 'Si tu jouais avec un compte (email, Google ou Apple), ta progression est sauvegardée dans le cloud et tu peux la récupérer en te connectant avec le même compte sur n’importe quel appareil. Si tu jouais en tant qu’invité, la progression n’existe que sur cet appareil.',
+      privacyHeading: 'Politique de confidentialité',
+      privacyLink: 'Tu peux la consulter ici : <a href="./">Politique de confidentialité de 7 Families</a>.',
+    },
+    en: {
+      wordmark: 'Support',
+      h1: '7 Families support',
+      subtitle: 'Need help? We’re here.',
+      intro: 'If you’re having any trouble playing <strong>7 Families</strong>, have a question about your account, or want to report a bug, write to us:',
+      faqHeading: 'Frequently asked questions',
+      q1: 'How do I delete my account?',
+      a1: 'You can delete your account and all your data directly from the app: go to <strong>Settings → Delete account</strong>. Deletion is immediate and cannot be undone.',
+      q2: 'What are the game’s coins and packs?',
+      a2: 'They’re a virtual currency belonging to the game, with no real monetary value outside the app.',
+      q3: 'Did I lose my progress after switching devices?',
+      a3: 'If you were playing with an account (email, Google or Apple), your progress is saved in the cloud and you can get it back by signing in with the same account on any device. If you were playing as a guest, progress only exists on that device.',
+      privacyHeading: 'Privacy policy',
+      privacyLink: 'You can read it here: <a href="./">7 Families privacy policy</a>.',
+    },
+    pt: {
+      wordmark: 'Suporte',
+      h1: 'Suporte de 7 Families',
+      subtitle: 'Precisas de ajuda? Estamos aqui.',
+      intro: 'Se tiveres algum problema a jogar <strong>7 Families</strong>, uma dúvida sobre a tua conta, ou quiseres reportar um erro, escreve-nos:',
+      faqHeading: 'Perguntas frequentes',
+      q1: 'Como elimino a minha conta?',
+      a1: 'Podes eliminar a tua conta e todos os teus dados diretamente na app: vai a <strong>Definições → Eliminar conta</strong>. A eliminação é imediata e não pode ser desfeita.',
+      q2: 'O que são as moedas e os sobres do jogo?',
+      a2: 'São moeda virtual própria do jogo, sem qualquer valor monetário real fora da app.',
+      q3: 'Perdi o meu progresso ao mudar de dispositivo?',
+      a3: 'Se jogavas com uma conta (email, Google ou Apple), o teu progresso está guardado na nuvem e podes recuperá-lo iniciando sessão com a mesma conta em qualquer dispositivo. Se jogavas como convidado, o progresso só existe nesse dispositivo.',
+      privacyHeading: 'Política de privacidade',
+      privacyLink: 'Podes consultá-la aqui: <a href="./">Política de privacidade de 7 Families</a>.',
+    },
+  };
+
+  var SUPPORTED = ['es', 'ca', 'fr', 'en', 'pt'];
+
+  function applyLang(lang) {
+    if (!STRINGS[lang]) lang = 'es';
+    document.documentElement.lang = lang;
+    document.title = STRINGS[lang].h1;
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n');
+      if (STRINGS[lang][key] != null) el.innerHTML = STRINGS[lang][key];
+    });
+    document.querySelectorAll('[data-lang-btn]').forEach(function (btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-lang-btn') === lang);
+    });
+    try {
+      localStorage.setItem('lang', lang);
+    } catch (e) {}
+  }
+
+  var saved = null;
+  try {
+    saved = localStorage.getItem('lang');
+  } catch (e) {}
+  var browserLang = ((navigator.language || 'es').slice(0, 2) || 'es').toLowerCase();
+  var initial = SUPPORTED.indexOf(saved) !== -1 ? saved : SUPPORTED.indexOf(browserLang) !== -1 ? browserLang : 'es';
+  applyLang(initial);
+
+  document.querySelectorAll('[data-lang-btn]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      applyLang(btn.getAttribute('data-lang-btn'));
+    });
+  });
+</script>
 </body>
 </html>
