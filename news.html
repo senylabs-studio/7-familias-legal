@@ -28,6 +28,9 @@
   * {
     box-sizing: border-box;
   }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     margin: 0;
     min-height: 100vh;
@@ -98,9 +101,16 @@
   .panel {
     background: var(--blanco);
     border-radius: 28px;
-    padding: 0 0 34px;
     box-shadow: 0 8px 0 var(--marino-a20);
     overflow: hidden;
+  }
+  .entry {
+    scroll-margin-top: 16px;
+  }
+  .divider {
+    border: none;
+    border-top: 2px dashed var(--cielo-100);
+    margin: 0 26px;
   }
   .cover {
     width: 100%;
@@ -110,7 +120,16 @@
     background: var(--cielo-100);
   }
   .panel-body {
-    padding: 26px 26px 0;
+    padding: 26px 26px 30px;
+  }
+  .date {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--meta-ink);
+    margin: 0 0 8px;
   }
   h1 {
     font-family: 'Fredoka', sans-serif;
@@ -164,24 +183,19 @@
   <div class="wrap">
     <div class="panel">
       <div id="status" class="status"></div>
-      <div id="article" style="display: none">
-        <img class="cover" id="cover" src="" alt="" />
-        <div class="panel-body">
-          <h1 id="h1"></h1>
-          <p class="subtitle" id="subtitle"></p>
-          <p id="body"></p>
-        </div>
-      </div>
+      <div id="list"></div>
     </div>
   </div>
 
 <script>
-  // Pagina UNICA para todas las noticias (a diferencia de docs/privacy.html/support.html, que
-  // son contenido fijo): lee `?slug=` de su propia URL y pide esa fila directamente a la API
-  // REST publica de Supabase (PostgREST) con el anon key -- el mismo que ya viaja dentro del
-  // bundle de la app, publico por diseño (la tabla solo expone filas con active=true via RLS,
-  // ver supabase/schema.sql). Publicar una noticia nueva no toca este fichero para nada, solo
-  // la tabla news_items -- ver README.supabase.md, seccion 20.
+  // Pagina UNICA con TODAS las noticias (a diferencia de docs/privacy.html/support.html, que
+  // son contenido fijo) -- pide todas las filas activas a la API REST publica de Supabase
+  // (PostgREST, anon key -- el mismo que ya viaja dentro del bundle de la app, publico por
+  // diseño, protegido por la RLS de active=true, ver supabase/schema.sql) y las pinta todas en
+  // orden, separadas por un divisor. `?slug=<slug>` en la URL (lo que construye
+  // buildNewsLinkUrl en services/news.ts) ya no filtra que noticia mostrar -- ahora decide a
+  // cual hacer scroll automatico al cargar. Publicar una noticia nueva no toca este fichero
+  // para nada, solo la tabla news_items -- ver README.supabase.md, seccion 20.
   //
   // Rellena estos dos valores UNA sola vez, con los de tu proyecto real (Project Settings ->
   // API), antes de publicar esta pagina en el repo 7-familias-legal.
@@ -189,17 +203,18 @@
   var SUPABASE_ANON_KEY = 'sb_publishable_aI-Vc9xSavWokT_mT1UL3w_u4uWwVH0';
 
   var UI_STRINGS = {
-    es: { wordmark: 'Novedades', loading: 'Cargando…', notFound: 'No se encontró esta noticia.' },
-    ca: { wordmark: 'Novetats', loading: 'Carregant…', notFound: 'No s’ha trobat aquesta notícia.' },
-    fr: { wordmark: 'Actualités', loading: 'Chargement…', notFound: 'Actualité introuvable.' },
-    en: { wordmark: 'News', loading: 'Loading…', notFound: 'This news item could not be found.' },
-    pt: { wordmark: 'Novidades', loading: 'A carregar…', notFound: 'Não foi possível encontrar esta notícia.' },
+    es: { wordmark: 'Novedades', loading: 'Cargando…', empty: 'Todavía no hay novedades.' },
+    ca: { wordmark: 'Novetats', loading: 'Carregant…', empty: 'Encara no hi ha novetats.' },
+    fr: { wordmark: 'Actualités', loading: 'Chargement…', empty: 'Pas encore d’actualités.' },
+    en: { wordmark: 'News', loading: 'Loading…', empty: 'No news yet.' },
+    pt: { wordmark: 'Novidades', loading: 'A carregar…', empty: 'Ainda não há novidades.' },
   };
   var SUPPORTED = ['es', 'ca', 'fr', 'en', 'pt'];
 
   var currentLang = 'es';
-  var article = null; // { image_url, title, subtitle, body } tal cual llega de Supabase
+  var items = []; // [{ slug, image_url, title, subtitle, body, created_at }, ...] tal cual de Supabase
   var status = 'loading'; // 'loading' | 'ready' | 'error'
+  var hasScrolledToTarget = false;
 
   // Idioma pedido -> español -> el primero que haya en el objeto -> null. Mismo criterio que
   // resolveNewsTitle en services/news.ts (duplicado aqui a proposito: esta pagina no tiene
@@ -212,32 +227,97 @@
     return keys.length > 0 ? obj[keys[0]] : null;
   }
 
+  function formatDate(isoString, lang) {
+    try {
+      return new Date(isoString).toLocaleDateString(lang, {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
+    } catch (e) {
+      return '';
+    }
+  }
+
+  function renderList() {
+    var listEl = document.getElementById('list');
+    listEl.innerHTML = '';
+    items.forEach(function (item, index) {
+      if (index > 0) listEl.appendChild(document.createElement('hr')).className = 'divider';
+
+      var section = document.createElement('section');
+      section.className = 'entry';
+      section.id = 'news-' + item.slug;
+
+      var cover = document.createElement('img');
+      cover.className = 'cover';
+      cover.src = item.image_url;
+      cover.alt = '';
+      section.appendChild(cover);
+
+      var body = document.createElement('div');
+      body.className = 'panel-body';
+
+      var date = document.createElement('p');
+      date.className = 'date';
+      date.textContent = formatDate(item.created_at, currentLang);
+      body.appendChild(date);
+
+      var h1 = document.createElement('h1');
+      h1.textContent = localized(item.title, currentLang) || '';
+      body.appendChild(h1);
+
+      var subtitle = document.createElement('p');
+      subtitle.className = 'subtitle';
+      subtitle.textContent = localized(item.subtitle, currentLang) || '';
+      body.appendChild(subtitle);
+
+      var text = document.createElement('p');
+      text.innerHTML = localized(item.body, currentLang) || '';
+      body.appendChild(text);
+
+      section.appendChild(body);
+      listEl.appendChild(section);
+    });
+  }
+
   function render() {
     document.documentElement.lang = currentLang;
     var ui = UI_STRINGS[currentLang] || UI_STRINGS.es;
     document.getElementById('wordmark').textContent = ui.wordmark;
+    document.title = ui.wordmark + ' — 7 Families';
     document.querySelectorAll('[data-lang-btn]').forEach(function (btn) {
       btn.classList.toggle('active', btn.getAttribute('data-lang-btn') === currentLang);
     });
 
     var statusEl = document.getElementById('status');
-    var articleEl = document.getElementById('article');
+    var listEl = document.getElementById('list');
 
-    if (status !== 'ready') {
+    if (status === 'loading') {
       statusEl.style.display = 'block';
-      articleEl.style.display = 'none';
-      statusEl.textContent = status === 'loading' ? ui.loading : ui.notFound;
+      listEl.style.display = 'none';
+      statusEl.textContent = ui.loading;
+      return;
+    }
+    if (status === 'error' || items.length === 0) {
+      statusEl.style.display = 'block';
+      listEl.style.display = 'none';
+      statusEl.textContent = ui.empty;
       return;
     }
 
     statusEl.style.display = 'none';
-    articleEl.style.display = 'block';
-    var title = localized(article.title, currentLang) || '';
-    document.title = title + ' — 7 Families';
-    document.getElementById('cover').src = article.image_url;
-    document.getElementById('h1').textContent = title;
-    document.getElementById('subtitle').textContent = localized(article.subtitle, currentLang) || '';
-    document.getElementById('body').innerHTML = localized(article.body, currentLang) || '';
+    listEl.style.display = 'block';
+    renderList();
+
+    if (!hasScrolledToTarget) {
+      hasScrolledToTarget = true;
+      var slug = new URLSearchParams(window.location.search).get('slug');
+      if (slug) {
+        var target = document.getElementById('news-' + slug);
+        if (target) target.scrollIntoView({ behavior: 'auto', block: 'start' });
+      }
+    }
   }
 
   function setLang(lang) {
@@ -254,46 +334,49 @@
     });
   });
 
+  // `?lang=` (el idioma que el jugador ya tenia elegido en la app, ver components/NewsSection.tsx)
+  // manda sobre lo guardado en localStorage y sobre el idioma del navegador -- asi la pagina
+  // abre siempre en el idioma de la app cuando se llega desde ahi, sin depender de la
+  // configuracion del propio navegador del movil.
+  var urlLang = new URLSearchParams(window.location.search).get('lang');
   var saved = null;
   try {
     saved = localStorage.getItem('lang');
   } catch (e) {}
   var browserLang = ((navigator.language || 'es').slice(0, 2) || 'es').toLowerCase();
-  currentLang = SUPPORTED.indexOf(saved) !== -1 ? saved : SUPPORTED.indexOf(browserLang) !== -1 ? browserLang : 'es';
+  currentLang =
+    SUPPORTED.indexOf(urlLang) !== -1
+      ? urlLang
+      : SUPPORTED.indexOf(saved) !== -1
+        ? saved
+        : SUPPORTED.indexOf(browserLang) !== -1
+          ? browserLang
+          : 'es';
   render();
 
-  var slug = new URLSearchParams(window.location.search).get('slug');
-
-  if (!slug) {
-    status = 'error';
-    render();
-  } else {
-    var url =
-      SUPABASE_URL +
-      '/rest/v1/news_items?slug=eq.' +
-      encodeURIComponent(slug) +
-      '&active=eq.true&select=image_url,title,subtitle,body';
-    fetch(url, {
-      headers: {
-        apikey: SUPABASE_ANON_KEY,
-        Authorization: 'Bearer ' + SUPABASE_ANON_KEY,
-      },
+  var url =
+    SUPABASE_URL +
+    '/rest/v1/news_items?active=eq.true&order=sort_order.asc,created_at.asc' +
+    '&select=slug,image_url,title,subtitle,body,created_at';
+  fetch(url, {
+    headers: {
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: 'Bearer ' + SUPABASE_ANON_KEY,
+    },
+  })
+    .then(function (res) {
+      if (!res.ok) throw new Error('http ' + res.status);
+      return res.json();
     })
-      .then(function (res) {
-        if (!res.ok) throw new Error('http ' + res.status);
-        return res.json();
-      })
-      .then(function (rows) {
-        if (!rows || rows.length === 0) throw new Error('not found');
-        article = rows[0];
-        status = 'ready';
-        render();
-      })
-      .catch(function () {
-        status = 'error';
-        render();
-      });
-  }
+    .then(function (rows) {
+      items = rows || [];
+      status = 'ready';
+      render();
+    })
+    .catch(function () {
+      status = 'error';
+      render();
+    });
 </script>
 </body>
 </html>
