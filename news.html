@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Novedades — 7 Families</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&display=swap"
+  rel="stylesheet"
+/>
+<style>
+  :root {
+    --marino: #0d4b6b;
+    --marino-a20: rgba(13, 75, 107, 0.2);
+    --marino-faint: rgba(13, 75, 107, 0.45);
+    --cielo-100: #e3f3fa;
+    --cielo-light: #7be3ff;
+    --cielo: #23b7f0;
+    --cielo-dark: #1596cc;
+    --coral: #ff5d73;
+    --coral-100: #ffe6ea;
+    --coral-700: #c93b50;
+    --meta-ink: #4a7f99;
+    --blanco: #ffffff;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(180deg, var(--cielo-light) 0%, var(--cielo) 45%, var(--cielo-dark) 100%);
+    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--marino);
+  }
+  .hero {
+    padding: 28px 16px 96px;
+    text-align: center;
+  }
+  .app-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 20px;
+    border: 3px solid var(--blanco);
+    box-shadow: 0 5px 0 var(--marino-a20);
+    display: block;
+    margin: 0 auto 10px;
+  }
+  .wordmark {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    color: var(--blanco);
+    -webkit-text-stroke: 6px var(--marino);
+    paint-order: stroke fill;
+    letter-spacing: 0.01em;
+    margin: 8px 0 4px;
+  }
+  .eyebrow {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .lang-switch {
+    display: inline-flex;
+    gap: 6px;
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.22);
+    padding: 5px;
+    border-radius: 999px;
+  }
+  .lang-switch button {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 0.03em;
+    border: none;
+    background: transparent;
+    color: var(--blanco);
+    padding: 7px 13px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .lang-switch button.active {
+    background: var(--blanco);
+    color: var(--marino);
+  }
+  .wrap {
+    max-width: 700px;
+    margin: -68px auto 0;
+    padding: 0 16px 80px;
+  }
+  .panel {
+    background: var(--blanco);
+    border-radius: 28px;
+    padding: 0 0 34px;
+    box-shadow: 0 8px 0 var(--marino-a20);
+    overflow: hidden;
+  }
+  .cover {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+    background: var(--cielo-100);
+  }
+  .panel-body {
+    padding: 26px 26px 0;
+  }
+  h1 {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    margin: 0 0 6px;
+    color: var(--marino);
+  }
+  .subtitle {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--meta-ink);
+    margin: 0 0 22px;
+  }
+  p {
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0 0 12px;
+  }
+  a {
+    color: var(--coral);
+    text-decoration: none;
+    font-weight: 700;
+  }
+  a:hover {
+    color: var(--coral-700);
+  }
+  .status {
+    padding: 40px 26px;
+    text-align: center;
+    font-weight: 700;
+    color: var(--meta-ink);
+  }
+</style>
+</head>
+<body>
+  <div class="hero">
+    <img class="app-icon" src="./assets/icon.jpg" alt="7 Families" />
+    <div class="eyebrow">7 Families</div>
+    <div class="wordmark" id="wordmark">Novedades</div>
+    <div class="lang-switch">
+      <button data-lang-btn="es">ES</button>
+      <button data-lang-btn="ca">CA</button>
+      <button data-lang-btn="fr">FR</button>
+      <button data-lang-btn="en">EN</button>
+      <button data-lang-btn="pt">PT</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="panel">
+      <div id="status" class="status"></div>
+      <div id="article" style="display: none">
+        <img class="cover" id="cover" src="" alt="" />
+        <div class="panel-body">
+          <h1 id="h1"></h1>
+          <p class="subtitle" id="subtitle"></p>
+          <p id="body"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // Pagina UNICA para todas las noticias (a diferencia de docs/privacy.html/support.html, que
+  // son contenido fijo): lee `?slug=` de su propia URL y pide esa fila directamente a la API
+  // REST publica de Supabase (PostgREST) con el anon key -- el mismo que ya viaja dentro del
+  // bundle de la app, publico por diseño (la tabla solo expone filas con active=true via RLS,
+  // ver supabase/schema.sql). Publicar una noticia nueva no toca este fichero para nada, solo
+  // la tabla news_items -- ver README.supabase.md, seccion 20.
+  //
+  // Rellena estos dos valores UNA sola vez, con los de tu proyecto real (Project Settings ->
+  // API), antes de publicar esta pagina en el repo 7-familias-legal.
+  var SUPABASE_URL = 'https://geyujvgyahytbzjnttau.supabase.co';
+  var SUPABASE_ANON_KEY = 'sb_publishable_aI-Vc9xSavWokT_mT1UL3w_u4uWwVH0';
+
+  var UI_STRINGS = {
+    es: { wordmark: 'Novedades', loading: 'Cargando…', notFound: 'No se encontró esta noticia.' },
+    ca: { wordmark: 'Novetats', loading: 'Carregant…', notFound: 'No s’ha trobat aquesta notícia.' },
+    fr: { wordmark: 'Actualités', loading: 'Chargement…', notFound: 'Actualité introuvable.' },
+    en: { wordmark: 'News', loading: 'Loading…', notFound: 'This news item could not be found.' },
+    pt: { wordmark: 'Novidades', loading: 'A carregar…', notFound: 'Não foi possível encontrar esta notícia.' },
+  };
+  var SUPPORTED = ['es', 'ca', 'fr', 'en', 'pt'];
+
+  var currentLang = 'es';
+  var article = null; // { image_url, title, subtitle, body } tal cual llega de Supabase
+  var status = 'loading'; // 'loading' | 'ready' | 'error'
+
+  // Idioma pedido -> español -> el primero que haya en el objeto -> null. Mismo criterio que
+  // resolveNewsTitle en services/news.ts (duplicado aqui a proposito: esta pagina no tiene
+  // acceso al bundle de la app, es un fichero HTML suelto sin build).
+  function localized(obj, lang) {
+    if (!obj) return null;
+    if (obj[lang]) return obj[lang];
+    if (obj.es) return obj.es;
+    var keys = Object.keys(obj);
+    return keys.length > 0 ? obj[keys[0]] : null;
+  }
+
+  function render() {
+    document.documentElement.lang = currentLang;
+    var ui = UI_STRINGS[currentLang] || UI_STRINGS.es;
+    document.getElementById('wordmark').textContent = ui.wordmark;
+    document.querySelectorAll('[data-lang-btn]').forEach(function (btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-lang-btn') === currentLang);
+    });
+
+    var statusEl = document.getElementById('status');
+    var articleEl = document.getElementById('article');
+
+    if (status !== 'ready') {
+      statusEl.style.display = 'block';
+      articleEl.style.display = 'none';
+      statusEl.textContent = status === 'loading' ? ui.loading : ui.notFound;
+      return;
+    }
+
+    statusEl.style.display = 'none';
+    articleEl.style.display = 'block';
+    var title = localized(article.title, currentLang) || '';
+    document.title = title + ' — 7 Families';
+    document.getElementById('cover').src = article.image_url;
+    document.getElementById('h1').textContent = title;
+    document.getElementById('subtitle').textContent = localized(article.subtitle, currentLang) || '';
+    document.getElementById('body').innerHTML = localized(article.body, currentLang) || '';
+  }
+
+  function setLang(lang) {
+    currentLang = lang;
+    try {
+      localStorage.setItem('lang', lang);
+    } catch (e) {}
+    render();
+  }
+
+  document.querySelectorAll('[data-lang-btn]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      setLang(btn.getAttribute('data-lang-btn'));
+    });
+  });
+
+  var saved = null;
+  try {
+    saved = localStorage.getItem('lang');
+  } catch (e) {}
+  var browserLang = ((navigator.language || 'es').slice(0, 2) || 'es').toLowerCase();
+  currentLang = SUPPORTED.indexOf(saved) !== -1 ? saved : SUPPORTED.indexOf(browserLang) !== -1 ? browserLang : 'es';
+  render();
+
+  var slug = new URLSearchParams(window.location.search).get('slug');
+
+  if (!slug) {
+    status = 'error';
+    render();
+  } else {
+    var url =
+      SUPABASE_URL +
+      '/rest/v1/news_items?slug=eq.' +
+      encodeURIComponent(slug) +
+      '&active=eq.true&select=image_url,title,subtitle,body';
+    fetch(url, {
+      headers: {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: 'Bearer ' + SUPABASE_ANON_KEY,
+      },
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error('http ' + res.status);
+        return res.json();
+      })
+      .then(function (rows) {
+        if (!rows || rows.length === 0) throw new Error('not found');
+        article = rows[0];
+        status = 'ready';
+        render();
+      })
+      .catch(function () {
+        status = 'error';
+        render();
+      });
+  }
+</script>
+</body>
+</html>
