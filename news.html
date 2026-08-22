@@ -108,9 +108,24 @@
     scroll-margin-top: 16px;
   }
   .divider {
-    border: none;
-    border-top: 2px dashed var(--cielo-100);
-    margin: 0 26px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 22px 26px 16px;
+  }
+  .divider-line {
+    flex: 1;
+    height: 2px;
+    background: var(--cielo-100);
+  }
+  .divider-date {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--meta-ink);
+    white-space: nowrap;
   }
   .cover {
     width: 100%;
@@ -121,15 +136,6 @@
   }
   .panel-body {
     padding: 26px 26px 30px;
-  }
-  .date {
-    font-family: 'Nunito', sans-serif;
-    font-weight: 800;
-    font-size: 11px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--meta-ink);
-    margin: 0 0 8px;
   }
   h1 {
     font-family: 'Fredoka', sans-serif;
@@ -242,12 +248,30 @@
   function renderList() {
     var listEl = document.getElementById('list');
     listEl.innerHTML = '';
-    items.forEach(function (item, index) {
-      if (index > 0) listEl.appendChild(document.createElement('hr')).className = 'divider';
-
+    items.forEach(function (item) {
       var section = document.createElement('section');
       section.className = 'entry';
       section.id = 'news-' + item.slug;
+
+      // Separador con la fecha en medio, delante de CADA noticia (tambien la primera) -- hace
+      // de linea divisoria entre una y la siguiente Y de sitio donde mostrar la fecha, en vez
+      // de un <hr> suelto entre ellas y la fecha aparte dentro del texto (diseño anterior).
+      // published_at, no created_at -- fecha en la que la noticia se puso activa por primera
+      // vez, no en la que se creo la fila (puede haber estado en borrador antes). La rellena
+      // sola el trigger set_news_published_at en supabase/schema.sql.
+      var divider = document.createElement('div');
+      divider.className = 'divider';
+      var lineBefore = document.createElement('span');
+      lineBefore.className = 'divider-line';
+      var dateEl = document.createElement('span');
+      dateEl.className = 'divider-date';
+      dateEl.textContent = formatDate(item.published_at, currentLang);
+      var lineAfter = document.createElement('span');
+      lineAfter.className = 'divider-line';
+      divider.appendChild(lineBefore);
+      divider.appendChild(dateEl);
+      divider.appendChild(lineAfter);
+      section.appendChild(divider);
 
       var cover = document.createElement('img');
       cover.className = 'cover';
@@ -257,14 +281,6 @@
 
       var body = document.createElement('div');
       body.className = 'panel-body';
-
-      var date = document.createElement('p');
-      date.className = 'date';
-      // published_at, no created_at -- fecha en la que la noticia se puso activa por primera
-      // vez, no en la que se creo la fila (puede haber estado en borrador antes). La rellena
-      // sola el trigger set_news_published_at en supabase/schema.sql.
-      date.textContent = formatDate(item.published_at, currentLang);
-      body.appendChild(date);
 
       var h1 = document.createElement('h1');
       h1.textContent = localized(item.title, currentLang) || '';
