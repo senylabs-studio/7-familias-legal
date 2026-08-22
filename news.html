@@ -212,7 +212,7 @@
   var SUPPORTED = ['es', 'ca', 'fr', 'en', 'pt'];
 
   var currentLang = 'es';
-  var items = []; // [{ slug, image_url, title, subtitle, body, created_at }, ...] tal cual de Supabase
+  var items = []; // [{ slug, image_url, title, subtitle, body, published_at }, ...] tal cual de Supabase
   var status = 'loading'; // 'loading' | 'ready' | 'error'
   var hasScrolledToTarget = false;
 
@@ -260,7 +260,10 @@
 
       var date = document.createElement('p');
       date.className = 'date';
-      date.textContent = formatDate(item.created_at, currentLang);
+      // published_at, no created_at -- fecha en la que la noticia se puso activa por primera
+      // vez, no en la que se creo la fila (puede haber estado en borrador antes). La rellena
+      // sola el trigger set_news_published_at en supabase/schema.sql.
+      date.textContent = formatDate(item.published_at, currentLang);
       body.appendChild(date);
 
       var h1 = document.createElement('h1');
@@ -357,7 +360,7 @@
   var url =
     SUPABASE_URL +
     '/rest/v1/news_items?active=eq.true&order=sort_order.asc,created_at.asc' +
-    '&select=slug,image_url,title,subtitle,body,created_at';
+    '&select=slug,image_url,title,subtitle,body,published_at';
   fetch(url, {
     headers: {
       apikey: SUPABASE_ANON_KEY,
